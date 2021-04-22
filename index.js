@@ -43,7 +43,8 @@ elementos.botoes.novaPergunta.addEventListener("click", (e) => {
   carregarPergunta();
 });
 
-const novoJogo = () => {  
+const novoJogo = () => {
+    
   ///declaração do jogo atual
   jogo = {
     dificuldade: undefined,
@@ -118,7 +119,7 @@ const novoJogo = () => {
 
   ///////AQUI MOSTRA A TELA DA DIFICULDADE E APAGA A DE NOVO JOGO
   elementos.telas.inicial.classList.remove("collapse");
-  elementos.telas.fimDeJogo.classList.add("collapse"); 
+  elementos.telas.fimDeJogo.classList.add("collapse");
 
   for (let i = 0; i < elementos.botoes.dificuldade.length; i++) {
     elementos.botoes.dificuldade[i].addEventListener("click", () => {
@@ -144,7 +145,7 @@ const novoJogo = () => {
     if (jogo.dificuldade != undefined) {
       elementos.telas.inicial.classList.add("collapse");
       console.log("ta");
-      
+
       carregarPergunta();
     } else {
       elementos.avisoDificuldade.classList.remove("collapse");
@@ -152,7 +153,7 @@ const novoJogo = () => {
   });
 };
 
-///CARREGA CATEGORAIAS E PERGUNTAS
+///CARREGA CATEGORIAS E PERGUNTAS
 const carregarCategorias = () => {
   axios.get(`${proxy}/${urlBase}/api_category.php`).then((response) => {
     const categoria = response.data.trivia_categories;
@@ -172,7 +173,6 @@ const carregarPergunta = () => {
       CarregaJogo();
     });
 };
-///
 
 ///CARREGA FIM DE JOGO E INICIO DO JOGO
 const carregarFimDeJogo = () => {
@@ -182,19 +182,18 @@ const carregarFimDeJogo = () => {
 
   elementos.telas.fimDeJogo.innerHTML = "";
 
-  elementos.telas.fimDeJogo.innerHTML += `<div><h3>Final Score: ${jogo.pontos}</h3></div>
-  <div><h3>Questions answered: ${jogo.perguntasRespondidas}</h3></div>
-  <div><h3>Correct answers: ${jogo.acertos}</h3></div>
-  <div><h3>Dificult played: ${jogo.dificuldade}</h3></div>
-  <div><h3>Category played: ${jogo.categoria}</h3></div>
-  <div><button id="botao-novo-jogo">New Game</button></div>`;
-
+  elementos.telas.fimDeJogo.innerHTML += `
+  <div class = "texto"><h3>Final Score: ${jogo.pontos}</h3></div>
+  <div class = "texto"><h3>Questions answered: ${jogo.perguntasRespondidas}</h3></div>
+  <div class = "texto"><h3>Correct answers: ${jogo.acertos}</h3></div>
+  <div class = "texto"><h3>Dificult played: ${jogo.dificuldade}</h3></div>
+  <div class = "texto"><h3>Category played: ${jogo.categoria}</h3></div>
+  <button class = "btn btn-outline-primary" id="botao-novo-jogo">New Game</button>`;
   const botaoNovoJogo = document.querySelector("#botao-novo-jogo");
 
-  botaoNovoJogo.addEventListener("click", (e) =>{    
-    novoJogo();   
+  botaoNovoJogo.addEventListener("click", (e) => {
+    novoJogo();
   });
-  
 };
 
 const CarregaJogo = () => {
@@ -219,8 +218,10 @@ const CarregaJogo = () => {
 
       div.appendChild(botaoConfirma);
 
+      elementos.botoes.armazenar.disabled = true;
+
       botaoConfirma.addEventListener("click", (e) => {
-        elementos.botoes.armazenar.disabled = true;
+
         botaoConfirma.parentNode.removeChild(botaoConfirma);
         jogo.armazenarPergunta();
       });
@@ -233,9 +234,8 @@ const CarregaJogo = () => {
     jogo.armazenada = undefined;
   }
 
-  elementos.textoPergunta.textContent = `${decodeHTMLEntities(
-    jogo.pergunta.question
-  )}`;
+  elementos.textoPergunta.innerHTML = `<p> ${decodeHTMLEntities(jogo.pergunta.question)}</p>`;
+
 
   const respostas = jogo.pergunta.incorrect_answers.concat(
     jogo.pergunta.correct_answer
@@ -247,8 +247,8 @@ const CarregaJogo = () => {
 
   for (let i = 0; i < respostas.length; i++) {
     elementos.telas.opcoes.innerHTML += `
-        <div id="div-alternativa-${i}" class="div-alternativa d-flex justify-content-center">
-            <button id="alternativa-${i}" class="btn btn-outline-dark m-2 flex-fill" type="button">${respostas[i]}</button>
+        <div id="div-alternativa-${i}" class="div-alternativa d-flex justify-content-center ">
+            <button id="alternativa-${i}" class="btn btn-outline-primary m-2 flex-fill " type="button">${respostas[i]}</button>
         </div>
     `;
   }
@@ -292,10 +292,8 @@ const verificaAcerto = (resposta) => {
   console.log(resposta);
   let result = undefined;
 
-  elementos.botoes.perguntaArmazenada.addEventListener("click", (e) => {});
+  elementos.botoes.perguntaArmazenada.addEventListener("click", (e) => { });
 
-  ////precisa colocar uma corzinha nos textos, mas não sei fazer isso
-  /// BRISA COLOQUE CORZINHAS NOS TEXTOS (e arruma esses botões feios por favor)
   if (resposta === jogo.pergunta.correct_answer) {
     elementos.telas.jogo.classList.add("collapse");
     elementos.textoResultado.textContent =
@@ -305,7 +303,9 @@ const verificaAcerto = (resposta) => {
     jogo.atualizaPontuacao(true);
   } else {
     elementos.telas.jogo.classList.add("collapse");
+
     elementos.textoResultado.innerHTML = `Oops, you missed the question<br>The correct answer was: ${jogo.pergunta.correct_answer}`;
+
     elementos.telas.resultado.classList.remove("collapse");
 
     jogo.atualizaPontuacao(false);

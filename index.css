@@ -1,3 +1,50 @@
+body >* {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+#pergunta >* {
+  color:rgba(240, 240, 240, 0.781);
+}
+
+#pergunta-armazenada{
+  color: rgba(0, 0, 0, 0.781);
+}
+
+#texto-pergunta-armazenada{
+  color: rgba(240, 240, 240, 0.781);
+}
+
+#pontuacao{
+  color: rgba(240, 240, 240, 0.781);
+}
+
+#nova-pergunta{
+  color: rgba(0, 0, 0, 0.781);
+}
+
+#texto-resultado{
+  color: rgba(240, 240, 240, 0.781);
+}
+
+
+.texto{
+  color:white;
+}
+
 .botao-alternativa{
   color: aqua;
 } 
+
+body{
+  background-color: rgb(58, 57, 57);
+}
+
+.seletor-dificuldade{
+  background-color: rgb(148, 55, 136);
+  color: white;
+}
+
+.seletor-dificuldade:hover{
+  background-color: rgb(116, 44, 106);
+
+}

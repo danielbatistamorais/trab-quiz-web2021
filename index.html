@@ -1,99 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous" />
     <link rel="stylesheet" href="index.css" />
-    <title>Jogo das pergunta</title>
-  </head>
-  <body>
-    <div id="tela-inicial" class="row">
-      <button class="seletor-dificuldade btn btn-lg col-4">Easy</button>
-      <button class="seletor-dificuldade btn btn-lg col-4">Medium</button>
-      <button class="seletor-dificuldade btn btn-lg col-4">Hard</button>
+    <title>Quiz</title>
+</head>
 
-      <select
-        id="seletor-categoria"
-        class="form-select col-12"
-        aria-label="Default select example"
-        placeholder="Categorias"
-      >
-        <option value="0">Random</option>
-      </select>
-      <button id="iniciar-jogo" class="btn btn-primary btn-lg col-12">
-        Iniciar jogo
-      </button>
-      <p class="aviso-dificuldade text-danger collapse">
-        Selecione uma dificuldade
-      </p>
+<body>
+    <div class="container-fluid">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <div id="tela-inicial" class="row align-items-center space-between">
+                <button class="seletor-dificuldade btn col-3 m-3 form-select-sm">Easy</button>
+                <button class="seletor-dificuldade btn col-4 m-3 form-select-sm">Medium</button>
+                <button class="seletor-dificuldade btn col-3 m-3 form-select-sm">Hard</button>
+                    <div class="row ">
+                        <div class="col-2">
+
+                        </div>
+                            <div class="col-8">
+
+                                <select id="seletor-categoria" class="form-select col-10 mx-3"
+                                    aria-label="Default select example" placeholder="Categorias">
+                                    <option value="0">Random</option>
+
+                            </select>
+                            </div>
+                        <div class="col-2">
+
+                    </div>
+                </div>
+
+
+                <button id="iniciar-jogo" class="btn btn-primary btn-lg col-10 mt-4 mx-5">
+                    Iniciar jogo
+                </button>
+                <p class="aviso-dificuldade text-danger collapse">
+                    Selecione uma dificuldade
+                </p>
+            </div>
+
+            <!-- jogo -->
+
+            <div id="tela-jogo" class="collapse row">
+                <div class="col-12">
+                    <h1 id="pergunta" class="h1 col-12"></h1>
+                </div>
+
+                <div id="alternativas" class="col-12"></div>
+
+                <div id="tela-opcoes"></div>
+                <div>
+                    <!-- <button id="botao-confirmar" class="btn btn-outline-dark m-2 flex-fill">Confirm</button>
+            <button id="botao-cancelar" class="btn btn-outline-dark m-2 flex-fill">Cancel</button> -->
+                </div>
+                <div id="div-armazenar" class="div-alternativa d-flex justify-content-center">
+                    <button id="botao-armazenar" type="button" class="btn btn-outline-success m-1 flex-fill"
+                        type="button">
+                        Store question
+                    </button>
+                </div>
+                <div>
+                    <h1 id="pontuacao" class="">Score: 00</h1>
+                </div>
+            </div>
+
+            <div id="tela-resultado" class="collapse">
+                <div>
+                    <h1 id="texto-resultado"></h1>
+                </div>
+
+                <div>
+                    <h2 id="texto-pergunta-armazenada" class="collapse ">
+                        Which question do you want to answer next?
+                    </h2>
+                </div>
+
+                <div>
+                    <button id="nova-pergunta" class = "btn btn-primary">New Question</button>
+                </div>
+
+                <div>
+                    <button id="pergunta-armazenada" class="btn btn-primary mt-3 collapse ">
+                        Stored Question
+                    </button>
+                </div>
+            </div>
+
+            <div id="tela-fim-de-jogo" class="collapse">
+
+            </div>
+
+        </div>
     </div>
 
-    <!-- jogo -->
 
-    <div id="tela-jogo" class="collapse row">
-      <div class="col-12">
-        <h1 id="pergunta" class="h1 col-12"></h1>
-      </div>
-
-      <div id="alternativas" class="col-12"></div>
-
-      <div id="tela-opcoes"></div>
-      <div>
-        <!-- <button id="botao-confirmar" class="btn btn-outline-dark m-2 flex-fill">Confirm</button>
-        <button id="botao-cancelar" class="btn btn-outline-dark m-2 flex-fill">Cancel</button> -->
-      </div>
-      <div
-        id="div-armazenar"
-        class="div-alternativa d-flex justify-content-center"
-      >
-        <button
-          id="botao-armazenar"
-          type="button"
-          class="btn btn-secondary m-1 flex-fill"
-          type="button"
-        >
-          Store question
-        </button>
-      </div>
-      <div>
-        <h1 id="pontuacao" class="">Score: 00</h1>
-      </div>
-    </div>
-
-    <div id="tela-resultado" class="collapse">
-      <div><h1 id="texto-resultado"></h1></div>
-
-      <div>
-        <h2 id="texto-pergunta-armazenada" class="collapse">
-          Which question do you want to answer next?
-        </h2>
-      </div>
-
-      <div><button id="nova-pergunta">New Question</button></div>
-
-      <div>
-        <button id="pergunta-armazenada" class="collapse">
-          Stored Question
-        </button>
-      </div>
-    </div>
-
-    <div id="tela-fim-de-jogo" class="collapse">
-      
-    </div>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="index.js"></script>
-  </body>
+</body>
+
 </html>
