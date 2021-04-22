@@ -44,7 +44,6 @@ elementos.botoes.novaPergunta.addEventListener("click", (e) => {
 });
 
 const novoJogo = () => {
-    
   ///declaração do jogo atual
   jogo = {
     dificuldade: undefined,
@@ -187,7 +186,7 @@ const carregarFimDeJogo = () => {
   <div class = "texto"><h3>Questions answered: ${jogo.perguntasRespondidas}</h3></div>
   <div class = "texto"><h3>Correct answers: ${jogo.acertos}</h3></div>
   <div class = "texto"><h3>Dificult played: ${jogo.dificuldade}</h3></div>
-  <div class = "texto"><h3>Category played: ${jogo.categoria}</h3></div>
+  <div class = "texto"><h3>Category played: ${jogo.categoria.nome}</h3></div>
   <button class = "btn btn-outline-primary" id="botao-novo-jogo">New Game</button>`;
   const botaoNovoJogo = document.querySelector("#botao-novo-jogo");
 
@@ -203,8 +202,20 @@ const CarregaJogo = () => {
   console.log(jogo.pergunta.question);
 
   ///LISTENER ARMAZENAR
-  elementos.botoes.armazenar.addEventListener("click", () => {
-    if (jogo.armazenada === undefined || jogo.armazenada != jogo.pergunta) {
+
+  ///→ ESTE IF SERVE PARA VERIFICAR SE A PERGUNTA QUE ESTA SENDO RESPONDIDA JÁ É A ARMAZENADA
+  if (jogo.armazenada === undefined) {
+    ///→ SE A PERGUNTA ARMAZENADA ESTIVER VAZIA ENTÃO O JOGADOR PODE CLICKAR NO BOTÃO DE ARMAZENAR
+    ///→ O COMANDO ABAIXO DEFINE O BOTÃO DE ARMAZENAR COMO "UTILIZAVEL"
+    elementos.botoes.armazenar.disabled = false;
+
+    elementos.botoes.armazenar.addEventListener("click", () => {
+      const botaoAntigo = document.querySelector("#confirm");
+
+      if (botaoAntigo != null) {
+        botaoAntigo.parentNode.removeChild(botaoAntigo);
+      }
+
       const div = document.querySelector(`#div-armazenar`);
       const botaoConfirma = document.createElement("button");
       const text = document.createTextNode("Confirm");
@@ -218,24 +229,25 @@ const CarregaJogo = () => {
 
       div.appendChild(botaoConfirma);
 
-      elementos.botoes.armazenar.disabled = true;
-
       botaoConfirma.addEventListener("click", (e) => {
+        ///→ QUANDO O JOGADOR DECIDE ARMAZENAR A PERGUNTA CLICANDO EM "CONFIRMAR", O BOTÃO DE ARMAZENAR SE TORNA INUTILIZAVEL,
+        ///ATÉ QUE ELE DECIDA RESPONDER A ARMAZENADA
+        ///→ O COMANDO ABAIXO DEFINE O BOTÃO DE ARMAZENAR COMO "INUTILIZAVEL"
+        elementos.botoes.armazenar.disabled = true;
 
         botaoConfirma.parentNode.removeChild(botaoConfirma);
         jogo.armazenarPergunta();
       });
-    }
-  });
-
-  if (jogo.armazenada === jogo.pergunta) {
-    console.log("aaa");
-
+    });
+    ///SE A PERGUNTA QUE ESTIVER SENDO FOR A ARMAZENADA, ENTÃO O JOGO ESVAZIA A PERGUNTA ARMAZENADA, PARA QUE O JOGADOR
+    ///POSSA NOVAMENTE ARMAZENAR OUTRA PERGUNTA
+  } else if (jogo.armazenada === jogo.pergunta) {
     jogo.armazenada = undefined;
   }
 
-  elementos.textoPergunta.innerHTML = `<p> ${decodeHTMLEntities(jogo.pergunta.question)}</p>`;
-
+  elementos.textoPergunta.innerHTML = `<p> ${decodeHTMLEntities(
+    jogo.pergunta.question
+  )}</p>`;
 
   const respostas = jogo.pergunta.incorrect_answers.concat(
     jogo.pergunta.correct_answer
@@ -292,7 +304,7 @@ const verificaAcerto = (resposta) => {
   console.log(resposta);
   let result = undefined;
 
-  elementos.botoes.perguntaArmazenada.addEventListener("click", (e) => { });
+  elementos.botoes.perguntaArmazenada.addEventListener("click", (e) => {});
 
   if (resposta === jogo.pergunta.correct_answer) {
     elementos.telas.jogo.classList.add("collapse");
